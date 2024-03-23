@@ -73,7 +73,7 @@ void generateUnit(Parameters &params){
     uniform_int_distribution<> unitAlienACap(params.AAttack.start, abs(params.AAttack.end));
     for (int i = 0; i < params.N; i++){
         int A = ProbA(gen);
-        if(A<= params.Prob){
+        if(A <= params.Prob){
             int B = ProbB(gen);
     // Random number generated for Earth units
             int unitEID = earthUnits(gen);
