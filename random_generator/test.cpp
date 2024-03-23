@@ -1,5 +1,5 @@
 #include <iostream>
-#include "random_generator/randomGent.cpp"
+#include "./randomGent.cpp"
 
 int main(){
     Parameters params;

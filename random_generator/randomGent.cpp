@@ -1,7 +1,6 @@
 #include<iostream>
 #include<random>
 #include<fstream>
-#include<sstream>
 #include "../units/unit.h"
 
 #define MAXAProbability 100
@@ -29,9 +28,9 @@ struct Parameters
     range APower,AHealth, AAttack;
 };
 
-bool isFileEmpty(const string &filename){
+bool validateFile(const string &filename){
     ifstream file(filename);
-    if(!file){
+    if(!file.is_open()){
         cerr << "Error: file not found" << endl;
         return false;
     }
@@ -42,9 +41,10 @@ bool isFileEmpty(const string &filename){
 
 bool loadParametrs(const string &filename, Parameters &params)
 {
+    if(!validateFile(filename)){
+        return false;
+    }
     ifstream file(filename);
-    isFileEmpty(filename);
-    string line;
     file >> params.N;
     file >> params.ESPercent >> params.ETPercent >> params.EGPercent;
     file >> params.ASPercent >> params.AMPercent >> params.ADPercent;
@@ -53,6 +53,7 @@ bool loadParametrs(const string &filename, Parameters &params)
     file >> params.EPower.start >> params.EPower.end >> params.EHealth.start >> params.EHealth.end >> params.EAttack.start >> params.EAttack.end;
     file >> params.APower.start >> params.APower.end >> params.AHealth.start >> params.AHealth.end >> params.AAttack.start >> params.AAttack.end;
     file.close();
+    return true;
 }
 
 void generateUnit(Parameters &params){
@@ -60,12 +61,12 @@ void generateUnit(Parameters &params){
     mt19937 gen(rd());
     uniform_int_distribution<> ProbA(MINAProbability, MAXAProbability);
     uniform_int_distribution<> ProbB(MINBProbability, MAXBProbability);
-// Random number generator for Earth units
+    // Random number generator for Earth units
     uniform_int_distribution<> earthUnits(MINEARTHID, MAXEARTHID);
     uniform_int_distribution<> unitEarthPower(params.EHealth.start, abs(params.EHealth.end));
     uniform_int_distribution<> unitEarthHealth(params.EPower.start,abs(params.EPower.end));
     uniform_int_distribution<> unitEarthACap(params.EAttack.start, abs(params.EAttack.end));
-// Random number generator for Alien units
+    // Random number generator for Alien units
     uniform_int_distribution<> alienUnits(MINALIENID, MAXALIENID);
     uniform_int_distribution<> unitAlienPower(params.AHealth.start, abs(params.AHealth.end));
     uniform_int_distribution<> unitAlienHealth(params.APower.start, abs(params.APower.end));
@@ -74,12 +75,12 @@ void generateUnit(Parameters &params){
         int A = ProbA(gen);
         if(A<= params.Prob){
             int B = ProbB(gen);
-// Random number generated for Earth units
+    // Random number generated for Earth units
             int unitEID = earthUnits(gen);
             int unitEPower = unitEarthPower(gen);
             int unitEHealth = unitEarthHealth(gen);
             int unitEACap = unitEarthACap(gen);
-// Radoom number generated for Alien units
+    // Radoom number generated for Alien units
             int unitAID = alienUnits(gen);
             int unitAPower = unitAlienPower(gen);
             int unitAHealth = unitAlienHealth(gen);
