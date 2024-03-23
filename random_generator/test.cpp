@@ -1,35 +1,17 @@
-#include<iostream>
-#include<random>
-#include<vector>
-#include<fstream>
-#include<sstream>
-using namespace std;
+#include <iostream>
+#include "random_generator/randomGent.cpp"
 
-
-
-vector<int> readnumbers(const string& input){
-    vector<int> numbers;
-    istringstream iss(input);
-    int num;
-    string line;
-    while (iss >> num)
-    {
-        for (int i = 0; i < line.size(); i++){
-            if(line[i] != '-' || line[i] != ' '){
-                numbers.push_back(num);
-            }
-        }
-    return numbers;
-    }
-        return numbers;
-}
-int main()
-{
-    string input = "1-2 3-4 5-6";
-    vector<int> numbers = readnumbers(input);
-    for (int i = 0; i < numbers.size(); i++)
-    {
-        cout << numbers[i] << " ";
-    }
+int main(){
+    Parameters params;
+    loadParametrs("/Users/omarelsawy/DS-Project /CMPS103-AlienInvasion/data/input.txt", params);
+    // Display loaded parameters
+    cout << "N: " << params.N << endl;
+    cout << "Earth Army Percentages: " << params.ESPercent << "% " << params.ETPercent << "% " << params.EGPercent << "%" << endl;
+    cout << "Alien Army Percentages: " << params.ASPercent << "% " << params.AMPercent << "% " << params.ADPercent << "%" << endl;
+    cout << "Probability: " << params.Prob << "%" << endl;
+    cout << "Earth Army Ranges: " << params.EPower.start << params.EPower.end << " " << params.EHealth.start  << params.EHealth.end << " " << params.EAttack.start << params.EAttack.end << endl;
+    cout << "Alien Army Ranges: " << params.APower.start << params.APower.end << " " << params.AHealth.start  << params.AHealth.end << " " << params.AAttack.start << params.AAttack.end << endl;
+    //Display generated units
+    generateUnit(params);
     return 0;
 }
