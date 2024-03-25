@@ -9,9 +9,9 @@ class QueueADT {
 
     virtual bool enqueue(const T& newEntry) = 0;
 
-    virtual bool dequeue(T& FrontEntry) = 0;
+    virtual bool dequeue(T& frontEntry) = 0;
 
-    virtual bool peek(T& FrontEntry) const = 0;
+    virtual bool peek(T& frontEntry) const = 0;
 
     virtual void printQueue() const = 0;
 

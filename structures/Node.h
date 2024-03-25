@@ -7,9 +7,7 @@ class Node {
     Node<T>* next;
 
    public:
-    Node(){
-        next = nullptr;
-    }
+    Node() { next = nullptr; }
 
     Node(const T& r_Item) {
         item = r_Item;
@@ -21,20 +19,11 @@ class Node {
         next = nextNodePtr;
     }
 
-    void setItem(const T& r_Item) {
-        item = r_Item;
-    }
+    void setItem(const T& r_Item) { item = r_Item; }
 
-    void setNext(Node<T>* nextNodePtr){
-        next = nextNodePtr;
-    }
+    void setNext(Node<T>* nextNodePtr) { next = nextNodePtr; }
 
-    T getItem() const {
-        return item;
-    }
+    T getItem() const { return item; }
 
-    Node<T>* getNext() const {
-        return next;
-    }
-
-};  // end Node
+    Node<T>* getNext() const { return next; }
+};

@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "ArrayStack.h"
+#include "Deque.h"
 #include "LinkedQueue.h"
 #include "PriQueue.h"
 
@@ -10,6 +11,9 @@ int main() {
     ArrayStack<int> stack;
     LinkedQueue<int> queue;
     PriQueue<int> priQueue;
+    Deque<int> deque;
+
+    int item;
 
     stack.push(1);
     stack.push(2);
@@ -17,7 +21,7 @@ int main() {
     stack.push(4);
     stack.push(5);
 
-    cout << "Stack: " << stack.getCount() << endl;
+    cout << endl << "Stack: " << stack.getCount() << endl;
     stack.printStack();
 
     queue.enqueue(1);
@@ -26,7 +30,7 @@ int main() {
     queue.enqueue(4);
     queue.enqueue(5);
 
-    cout << "Queue: " << queue.getCount() << endl;
+    cout << endl << "Queue: " << queue.getCount() << endl;
     queue.printQueue();
 
     priQueue.enqueue(1, 1);
@@ -35,8 +39,51 @@ int main() {
     priQueue.enqueue(4, 1);
     priQueue.enqueue(5, 2);
 
-    cout << "Priority Queue: " << priQueue.getCount() << endl;
+    cout << endl << "Priority Queue: " << priQueue.getCount() << endl;
     priQueue.printQueue();
+
+    cout << endl << "Deque: " << endl;
+    deque.enqueueFront(1);
+    deque.printQueue();
+    deque.enqueue(2);
+    deque.printQueue();
+    deque.enqueueFront(3);
+    deque.printQueue();
+
+    deque.peek(item);
+    cout << "Front Item: " << item << endl;
+    deque.peekBack(item);
+    cout << "Back item: " << item << endl;
+
+    deque.dequeueBack(item);
+
+    cout << endl;
+    deque.printQueue();
+
+    deque.peek(item);
+    cout << "Front Item: " << item << endl;
+    deque.peekBack(item);
+    cout << "Back item: " << item << endl;
+
+    deque.dequeue(item);
+
+    cout << endl;
+    deque.printQueue();
+
+    deque.peek(item);
+    cout << "Front Item: " << item << endl;
+    deque.peekBack(item);
+    cout << "Back item: " << item << endl;
+
+    deque.dequeue(item);
+    deque.dequeue(item);
+    deque.dequeue(item);
+    deque.dequeueBack(item);
+    deque.dequeueBack(item);
+    deque.dequeueBack(item);
+
+    cout << endl << "Deque: " << deque.getCount() << endl;
+    deque.printQueue();
 
     return 0;
 }

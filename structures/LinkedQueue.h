@@ -33,11 +33,11 @@ class LinkedQueue : public QueueADT<T> {
         return true;
     }
 
-    bool dequeue(T& frntEntry) override {
+    bool dequeue(T& frontEntry) override {
         if (isEmpty()) return false;
 
         Node<T>* nodeToDeletePtr = frontPtr;
-        frntEntry = frontPtr->getItem();
+        frontEntry = frontPtr->getItem();
         frontPtr = frontPtr->getNext();
         if (nodeToDeletePtr == backPtr) backPtr = nullptr;
 
@@ -46,10 +46,10 @@ class LinkedQueue : public QueueADT<T> {
         return true;
     }
 
-    bool peek(T& frntEntry) const override {
+    bool peek(T& frontEntry) const override {
         if (isEmpty()) return false;
 
-        frntEntry = frontPtr->getItem();
+        frontEntry = frontPtr->getItem();
         return true;
     }
 
