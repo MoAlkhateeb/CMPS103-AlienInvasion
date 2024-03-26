@@ -10,5 +10,5 @@ The Project is a simulation of a game where using an input file seed you can cre
 ## Data Structures Used
 - **Queue**: Implemented using a Singly Linked List. Used to store the units in the order of their creation.
 - **Stack**: Implemented using an Array. Used to store the units for last in first out access.
-- **Deque**: Inhereted from Queue. Used to store the units in the order of their creation and to access the first and last units in O(1) time.
+- **Deque**: Implemented using a Doubly Linked List. Used to store the units in the order of their creation and to access the first and last units in O(1) time.
 - **Priority Queue**: Implemented using a Singly Linked List. Used to prioritize units with a higher health + attack combination.
