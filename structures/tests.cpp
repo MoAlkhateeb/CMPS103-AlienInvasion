@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "ArrayBag.h"
 #include "ArrayStack.h"
 #include "Deque.h"
 #include "LinkedQueue.h"
@@ -12,6 +13,7 @@ int main() {
     LinkedQueue<int> queue;
     PriQueue<int> priQueue;
     Deque<int> deque;
+    ArrayBag<int> arrayBag;
 
     int item;
 
@@ -22,7 +24,7 @@ int main() {
     stack.push(5);
 
     cout << endl << "Stack: " << stack.getCount() << endl;
-    stack.printStack();
+    stack.print();
 
     queue.enqueue(1);
     queue.enqueue(2);
@@ -31,24 +33,24 @@ int main() {
     queue.enqueue(5);
 
     cout << endl << "Queue: " << queue.getCount() << endl;
-    queue.printQueue();
+    queue.print();
 
     priQueue.enqueue(1, 1);
-    priQueue.enqueue(2, 2);
     priQueue.enqueue(3, 1);
+    priQueue.enqueue(2, 2);
     priQueue.enqueue(4, 1);
     priQueue.enqueue(5, 2);
 
     cout << endl << "Priority Queue: " << priQueue.getCount() << endl;
-    priQueue.printQueue();
+    priQueue.print();
 
     cout << endl << "Deque: " << endl;
     deque.enqueueFront(1);
-    deque.printQueue();
+    deque.print();
     deque.enqueue(2);
-    deque.printQueue();
+    deque.print();
     deque.enqueueFront(3);
-    deque.printQueue();
+    deque.print();
 
     deque.peek(item);
     cout << "Front Item: " << item << endl;
@@ -58,7 +60,8 @@ int main() {
     deque.dequeueBack(item);
 
     cout << endl;
-    deque.printQueue();
+    deque.print();
+    cout << deque.getCount() << endl;
 
     deque.peek(item);
     cout << "Front Item: " << item << endl;
@@ -68,7 +71,7 @@ int main() {
     deque.dequeue(item);
 
     cout << endl;
-    deque.printQueue();
+    deque.print();
 
     deque.peek(item);
     cout << "Front Item: " << item << endl;
@@ -83,7 +86,17 @@ int main() {
     deque.dequeueBack(item);
 
     cout << endl << "Deque: " << deque.getCount() << endl;
-    deque.printQueue();
+    deque.print();
+
+    cout << "---- ARRAY BAG ----" << endl;
+    arrayBag.add(1);
+    arrayBag.add(2);
+    arrayBag.add(3);
+    arrayBag.add(4);
+    arrayBag.add(5);
+    arrayBag.add(6);
+
+    arrayBag.print();
 
     return 0;
 }

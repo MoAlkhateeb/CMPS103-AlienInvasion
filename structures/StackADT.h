@@ -13,7 +13,7 @@ class StackADT {
 
     virtual bool peek(T& TopEntry) const = 0;
 
-    virtual void printStack() const = 0;
+    virtual void print() const = 0;
 
     virtual ~StackADT() {}
 };

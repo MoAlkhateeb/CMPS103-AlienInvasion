@@ -13,7 +13,7 @@ class QueueADT {
 
     virtual bool peek(T& frontEntry) const = 0;
 
-    virtual void printQueue() const = 0;
+    virtual void print() const = 0;
 
     virtual ~QueueADT() {}
 };

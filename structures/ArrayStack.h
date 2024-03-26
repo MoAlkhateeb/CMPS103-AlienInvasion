@@ -8,19 +8,18 @@ using namespace std;
 
 template <typename T>
 class ArrayStack : public StackADT<T> {
-    enum { MAX_SIZE = 100 };
+    enum { MAX_SIZE = 1000 };
 
    private:
     T items[MAX_SIZE];
-    int top;
-    int count;
+    int top, count;
 
    public:
-    ArrayStack() : count(0), top(-1) {}
+    ArrayStack() : top(-1), count(0) {}
+
+    bool isEmpty() const override { return count == 0; }
 
     int getCount() const override { return count; }
-
-    bool isEmpty() const override { return top == -1; }
 
     bool push(const T& newEntry) override {
         if (top == MAX_SIZE - 1) return false;
@@ -47,12 +46,15 @@ class ArrayStack : public StackADT<T> {
         return true;
     }
 
-    virtual void printStack() const override {
+    virtual void print() const override {
         T x;
         cout << "[";
         for (int i = top; i >= 0; i--) {
             x = items[i];
-            cout << x;
+            if constexpr (std::is_pointer_v<T>)
+                cout << *x;
+            else
+                cout << x;
             if (i > 0) cout << ", ";
         }
         cout << "]" << endl;

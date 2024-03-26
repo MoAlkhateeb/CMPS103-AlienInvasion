@@ -1,7 +1,11 @@
 #pragma once
 
+#include <iostream>
+
 #include "Node.h"
 #include "QueueADT.h"
+
+using namespace std;
 
 template <typename T>
 class LinkedQueue : public QueueADT<T> {
@@ -19,7 +23,7 @@ class LinkedQueue : public QueueADT<T> {
 
     int getCount() const override { return count; }
 
-    bool isEmpty() const override { return (frontPtr == nullptr); }
+    bool isEmpty() const override { return count == 0; }
 
     bool enqueue(const T& newEntry) override {
         Node<T>* newNodePtr = new Node<T>(newEntry);
@@ -53,11 +57,14 @@ class LinkedQueue : public QueueADT<T> {
         return true;
     }
 
-    void printQueue() const override {
+    void print() const override {
         Node<T>* temp = frontPtr;
         cout << "[";
         while (temp != nullptr) {
-            cout << temp->getItem();
+            if constexpr (std::is_pointer_v<T>)
+                cout << *temp->getItem();
+            else
+                cout << temp->getItem();
             if (temp->getNext() != nullptr) cout << ", ";
             temp = temp->getNext();
         }

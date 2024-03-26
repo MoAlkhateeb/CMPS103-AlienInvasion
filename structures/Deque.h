@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 #include "DequeADT.h"
@@ -13,9 +15,8 @@ class Deque : public DequeADT<T> {
    public:
     Deque() : frontPtr(nullptr), backPtr(nullptr), count(0) {}
 
-    bool isEmpty() const override { return count == 0; }
-
     int getCount() const override { return count; }
+    bool isEmpty() const override { return count == 0; }
 
     bool enqueueFront(const T& newEntry) override {
         DoublyNode<T>* newNodePtr = new DoublyNode<T>(newEntry);
@@ -91,11 +92,14 @@ class Deque : public DequeADT<T> {
         return true;
     }
 
-    void printQueue() const override {
+    void print() const override {
         DoublyNode<T>* current = frontPtr;
         cout << "[";
         while (current) {
-            cout << current->getItem();
+            if constexpr (std::is_pointer_v<T>)
+                cout << *current->getItem();
+            else
+                cout << current->getItem();
             if (current != backPtr) cout << ", ";
             current = current->getNext();
         }

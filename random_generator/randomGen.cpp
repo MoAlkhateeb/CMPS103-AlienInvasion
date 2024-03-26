@@ -1,7 +1,8 @@
-#include<iostream>
-#include<random>
-#include<fstream>
-#include "../units/unit.h"
+#include <fstream>
+#include <iostream>
+#include <random>
+
+#include "../units/Unit.h"
 
 #define MAXAProbability 100
 #define MINAProbability 1
@@ -18,19 +19,18 @@ typedef struct range {
     int start, end;
 } range;
 
-struct Parameters 
-{
+struct Parameters {
     int N;
     int ESPercent, ETPercent, EGPercent;
     int ASPercent, AMPercent, ADPercent;
     int Prob;
     range EPower, EHealth, EAttack;
-    range APower,AHealth, AAttack;
+    range APower, AHealth, AAttack;
 };
 
-bool validateFile(const string &filename){
+bool validateFile(const string &filename) {
     ifstream file(filename);
-    if(!file.is_open()){
+    if (!file.is_open()) {
         cerr << "Error: file not found" << endl;
         return false;
     }
@@ -39,9 +39,8 @@ bool validateFile(const string &filename){
     return isEmpty;
 }
 
-bool loadParametrs(const string &filename, Parameters &params)
-{
-    if(!validateFile(filename)){
+bool loadParametrs(const string &filename, Parameters &params) {
+    if (!validateFile(filename)) {
         return false;
     }
     ifstream file(filename);
@@ -50,43 +49,49 @@ bool loadParametrs(const string &filename, Parameters &params)
     file >> params.ASPercent >> params.AMPercent >> params.ADPercent;
     file >> params.Prob;
     // Read ranges of Earth and Alien armies
-    file >> params.EPower.start >> params.EPower.end >> params.EHealth.start >> params.EHealth.end >> params.EAttack.start >> params.EAttack.end;
-    file >> params.APower.start >> params.APower.end >> params.AHealth.start >> params.AHealth.end >> params.AAttack.start >> params.AAttack.end;
+    file >> params.EPower.start >> params.EPower.end >> params.EHealth.start >>
+        params.EHealth.end >> params.EAttack.start >> params.EAttack.end;
+    file >> params.APower.start >> params.APower.end >> params.AHealth.start >>
+        params.AHealth.end >> params.AAttack.start >> params.AAttack.end;
     file.close();
     return true;
 }
 
-void generateUnit(Parameters &params){
+void generateUnit(Parameters &params) {
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> ProbA(MINAProbability, MAXAProbability);
     uniform_int_distribution<> ProbB(MINBProbability, MAXBProbability);
     // Random number generator for Earth units
     uniform_int_distribution<> earthUnits(MINEARTHID, MAXEARTHID);
-    uniform_int_distribution<> unitEarthPower(params.EHealth.start, abs(params.EHealth.end));
-    uniform_int_distribution<> unitEarthHealth(params.EPower.start,abs(params.EPower.end));
-    uniform_int_distribution<> unitEarthACap(params.EAttack.start, abs(params.EAttack.end));
+    uniform_int_distribution<> unitEarthPower(params.EHealth.start,
+                                              abs(params.EHealth.end));
+    uniform_int_distribution<> unitEarthHealth(params.EPower.start,
+                                               abs(params.EPower.end));
+    uniform_int_distribution<> unitEarthACap(params.EAttack.start,
+                                             abs(params.EAttack.end));
     // Random number generator for Alien units
     uniform_int_distribution<> alienUnits(MINALIENID, MAXALIENID);
-    uniform_int_distribution<> unitAlienPower(params.AHealth.start, abs(params.AHealth.end));
-    uniform_int_distribution<> unitAlienHealth(params.APower.start, abs(params.APower.end));
-    uniform_int_distribution<> unitAlienACap(params.AAttack.start, abs(params.AAttack.end));
-    for (int i = 0; i < params.N; i++){
+    uniform_int_distribution<> unitAlienPower(params.AHealth.start,
+                                              abs(params.AHealth.end));
+    uniform_int_distribution<> unitAlienHealth(params.APower.start,
+                                               abs(params.APower.end));
+    uniform_int_distribution<> unitAlienACap(params.AAttack.start,
+                                             abs(params.AAttack.end));
+    for (int i = 0; i < params.N; i++) {
         int A = ProbA(gen);
-        if(A <= params.Prob){
+        if (A <= params.Prob) {
             int B = ProbB(gen);
-    // Random number generated for Earth units
+            // Random number generated for Earth units
             int unitEID = earthUnits(gen);
             int unitEPower = unitEarthPower(gen);
             int unitEHealth = unitEarthHealth(gen);
             int unitEACap = unitEarthACap(gen);
-    // Radoom number generated for Alien units
+            // Radoom number generated for Alien units
             int unitAID = alienUnits(gen);
             int unitAPower = unitAlienPower(gen);
             int unitAHealth = unitAlienHealth(gen);
             int unitAACap = unitAlienACap(gen);
-        }  
+        }
     }
 }
-
-

@@ -56,14 +56,17 @@ class PriQueue {
         return true;
     }
 
-    bool isEmpty() const { return head == nullptr; }
+    bool isEmpty() const { return count == 0; }
 
-    void printQueue() const {
+    void print() const {
         PriNode<T>* current = head;
         int p;
         cout << "[";
         while (current) {
-            cout << current->getItem(p);
+            if constexpr (std::is_pointer_v<T>)
+                cout << *current->getItem(p);
+            else
+                cout << current->getItem(p);
             if (current->getNext()) {
                 cout << ", ";
             }
