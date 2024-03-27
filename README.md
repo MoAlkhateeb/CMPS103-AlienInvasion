@@ -2,7 +2,7 @@
 
 
 ## Description 
-This Project is part of a group Project in a Data Strucutres & Algorithms Course (CMPS103) at Cairo University Faulty of Engineering (CUFE).
+This Project is part of a group Project in a Data Strucutres & Algorithms Course (CMPS103) at Cairo University Faculty of Engineering (CUFE).
 
 The Project is a simulation of a game where using an input file seed you can create different war scenarios between two armies, the first army is the earth and the second army is the aliens. The game is a turn-based game where each army has a number of units and each unit has a number of health points and attack points. The game ends when one of the armies is completely destroyed and at least one unit is left in the other army.
 
