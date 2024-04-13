@@ -10,11 +10,15 @@ using namespace std;
 
 class AlienArmy {
    private:
-    AlienSoldierList SoldierList;
-    AlienDroneList DroneList;
-    AlienMonsterList MonsterList;
+    AlienSoldierList soldierList;
+    AlienDroneList droneList;
+    AlienMonsterList monsterList;
 
    public:
+    AlienSoldierList* getASList();
+    AlienDroneList* getADList();
+    AlienMonsterList* getAMList();
+
     void print();
     bool addUnit(Unit* unit1, Unit* unit2 = nullptr);
     bool attack();

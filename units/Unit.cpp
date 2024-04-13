@@ -39,6 +39,10 @@ bool Unit::setFirstAttackTime(int time) {
     return true;
 }
 
+void Unit::setHealth(int h) {
+    health = h;
+}
+
 ostream& operator<<(ostream& os, const Unit& obj) {
     os << obj.ID;
     return os;

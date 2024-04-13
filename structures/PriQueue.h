@@ -1,6 +1,10 @@
 #pragma once
 
+#include <iostream>
+
 #include "PriNode.h"
+
+using namespace std;
 
 template <typename T>
 class PriQueue {
@@ -13,8 +17,7 @@ class PriQueue {
     ~PriQueue() {
         T tmp;
         int p;
-        while (dequeue(tmp, p))
-            ;
+        while (dequeue(tmp, p));
     }
 
     int getCount() const { return count; }

@@ -1,97 +1,121 @@
-#include <fstream>
-#include <iostream>
+#include "randomGen.h"
+
 #include <random>
 
-#include "../units/Unit.h"
+#include "../game.h"
 
-#define MAXAProbability 100
-#define MINAProbability 1
-#define MAXBProbability 100
-#define MINBProbability 1
-#define MAXEARTHID 999
-#define MINEARTHID 1
-#define MAXALIENID 2999
-#define MINALIENID 2000
+RandGen::RandGen(Game* game)
+    : game(game), gen(rd()), Prob(1, 100) {}
 
-using namespace std;
 
-typedef struct range {
-    int start, end;
-} range;
 
-struct Parameters {
-    int N;
-    int ESPercent, ETPercent, EGPercent;
-    int ASPercent, AMPercent, ADPercent;
-    int Prob;
-    range EPower, EHealth, EAttack;
-    range APower, AHealth, AAttack;
-};
+void RandGen::createUnits(int timeStep) {
 
-bool validateFile(const string &filename) {
-    ifstream file(filename);
-    if (!file.is_open()) {
-        cerr << "Error: file not found" << endl;
-        return false;
+    int A = getRandomNumber();
+
+    if (A < generateProb) {
+        EarthArmy* earthArmy = game->getEarthArmy();
+
+        for (int i = 0; i < N; i++) {
+            Unit* generatedUnit = generateRandomEarthUnit(timeStep);
+            earthArmy->addUnit(generatedUnit);
+        }
     }
-    bool isEmpty = (file.peek() == ifstream::traits_type::eof());
-    file.close();
-    return isEmpty;
-}
 
-bool loadParametrs(const string &filename, Parameters &params) {
-    if (!validateFile(filename)) {
-        return false;
-    }
-    ifstream file(filename);
-    file >> params.N;
-    file >> params.ESPercent >> params.ETPercent >> params.EGPercent;
-    file >> params.ASPercent >> params.AMPercent >> params.ADPercent;
-    file >> params.Prob;
-    // Read ranges of Earth and Alien armies
-    file >> params.EPower.start >> params.EPower.end >> params.EHealth.start >>
-        params.EHealth.end >> params.EAttack.start >> params.EAttack.end;
-    file >> params.APower.start >> params.APower.end >> params.AHealth.start >>
-        params.AHealth.end >> params.AAttack.start >> params.AAttack.end;
-    file.close();
-    return true;
-}
+    A = getRandomNumber();
 
-void generateUnit(Parameters &params) {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> ProbA(MINAProbability, MAXAProbability);
-    uniform_int_distribution<> ProbB(MINBProbability, MAXBProbability);
-    // Random number generator for Earth units
-    uniform_int_distribution<> earthUnits(MINEARTHID, MAXEARTHID);
-    uniform_int_distribution<> unitEarthPower(params.EHealth.start,
-                                              abs(params.EHealth.end));
-    uniform_int_distribution<> unitEarthHealth(params.EPower.start,
-                                               abs(params.EPower.end));
-    uniform_int_distribution<> unitEarthACap(params.EAttack.start,
-                                             abs(params.EAttack.end));
-    // Random number generator for Alien units
-    uniform_int_distribution<> alienUnits(MINALIENID, MAXALIENID);
-    uniform_int_distribution<> unitAlienPower(params.AHealth.start,
-                                              abs(params.AHealth.end));
-    uniform_int_distribution<> unitAlienHealth(params.APower.start,
-                                               abs(params.APower.end));
-    uniform_int_distribution<> unitAlienACap(params.AAttack.start,
-                                             abs(params.AAttack.end));
-    for (int i = 0; i < params.N; i++) {
-        int A = ProbA(gen);
-        if (A <= params.Prob) {
-            int B = ProbB(gen);
-            // Random number generated for Earth units
-            int unitEID = earthUnits(gen);
-            int unitEPower = unitEarthPower(gen);
-            int unitEHealth = unitEarthHealth(gen);
-            int unitEACap = unitEarthACap(gen);
-            // Radoom number generated for Alien units
-            int unitAID = alienUnits(gen);
-            int unitAPower = unitAlienPower(gen);
-            int unitAHealth = unitAlienHealth(gen);
-            int unitAACap = unitAlienACap(gen);
+    if (A < generateProb) {
+        AlienArmy* alienArmy = game->getAlienArmy();
+        for (int i = 0; i < N; i++) {
+            Unit* generatedUnit = generateRandomAlienUnit(timeStep);
+            alienArmy->addUnit(generatedUnit);
         }
     }
 }
+
+Unit* RandGen::generateUnit(int ID, int timeStep, int power, int health,
+                            int capacity, UnitType type) const {
+    switch (type) {
+        case E_SOLDIER:
+            return new EarthSoldier(ID, timeStep, health, power, capacity, game);
+
+        case E_TANK:
+            return new EarthTank(ID, timeStep, health, power, capacity, game);
+
+        case E_GUNNERY:
+            return new EarthGunnery(ID, timeStep, health, power, capacity, game);
+
+        case A_SOLDIER:
+            return new AlienSoldier(ID, timeStep, health, power, capacity, game);
+
+        case A_MONSTER:
+            return new AlienMonster(ID, timeStep, health, power, capacity, game);
+
+        case A_DRONE:
+            return new AlienDrone(ID, timeStep, health, power, capacity, game);
+
+        default: return nullptr;
+    }
+}
+
+Unit* RandGen::generateRandomAlienUnit(int timeStep) {
+    uniform_int_distribution<> A_Power(APower.start, APower.end);
+    uniform_int_distribution<> A_Health(AHealth.start, AHealth.end);
+    uniform_int_distribution<> A_Capacity(AAttack.start, AAttack.end);
+
+    int power = A_Power(gen);
+    int health = A_Health(gen);
+    int capacity = A_Capacity(gen);
+
+    int B = getRandomNumber();
+
+    if (B < ASPercent) {
+        return generateUnit(alienID++, timeStep, power, health, capacity, A_SOLDIER);
+    } else if (B < ASPercent + AMPercent) {
+        return generateUnit(alienID++, timeStep, power, health, capacity, A_MONSTER);
+    } else {
+        return generateUnit(alienID++, timeStep, power, health, capacity, A_DRONE);
+    }
+}
+
+Unit* RandGen::generateRandomEarthUnit(int timeStep) {
+    uniform_int_distribution<> E_Power(EPower.start, EPower.end);
+    uniform_int_distribution<> E_Health(EHealth.start, EHealth.end);
+    uniform_int_distribution<> E_Capacity(EAttack.start, EAttack.end);
+
+    int power = E_Power(gen);
+    int health = E_Health(gen);
+    int capacity = E_Capacity(gen);
+
+    int B = getRandomNumber();
+
+    if (B < ESPercent) {
+        return generateUnit(earthID++, timeStep, power, health, capacity, E_SOLDIER);
+    } else if (B < ESPercent + ETPercent) {
+        return generateUnit(earthID++, timeStep, power, health, capacity, E_TANK);
+    } else {
+        return generateUnit(earthID++, timeStep, power, health, capacity, E_GUNNERY);
+    }
+}
+
+int RandGen::getRandomNumber() {
+    // generates a random number from 1 to 100
+    return Prob(gen);
+}
+
+void RandGen::setN(int n) { N = n; }
+void RandGen::setESPercent(int percent) { ESPercent = percent; }
+void RandGen::setETPercent(int percent) { ETPercent = percent; }
+void RandGen::setEGPercent(int percent) { EGPercent = percent; }
+void RandGen::setASPercent(int percent) { ASPercent = percent; }
+void RandGen::setAMPercent(int percent) { AMPercent = percent; }
+void RandGen::setADPercent(int percent) { ADPercent = percent; }
+
+void RandGen::setEPower(range power) { EPower = power; }
+void RandGen::setEHealth(range health) { EHealth = health; }
+void RandGen::setEAttack(range attack) { EAttack = attack; }
+
+void RandGen::setAPower(range power) { APower = power; }
+void RandGen::setAHealth(range health) { AHealth = health; }
+void RandGen::setAAttack(range attack) { AAttack = attack; }
+void RandGen::setGenerateProb(int prob) { generateProb = prob; }

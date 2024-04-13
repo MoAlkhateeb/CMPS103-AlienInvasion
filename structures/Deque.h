@@ -5,6 +5,8 @@
 #include "DequeADT.h"
 #include "DoublyNode.h"
 
+using namespace std;
+
 template <typename T>
 class Deque : public DequeADT<T> {
    private:
@@ -108,7 +110,6 @@ class Deque : public DequeADT<T> {
 
     ~Deque() {
         T temp;
-        while (dequeue(temp))
-            ;
+        while (dequeue(temp));
     }
 };

@@ -1,11 +1,12 @@
 #pragma once
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
-#include "../game.h"
 
 using namespace std;
+
+class Game;
 
 enum UnitType { E_SOLDIER, E_TANK, E_GUNNERY, A_SOLDIER, A_MONSTER, A_DRONE };
 
@@ -13,16 +14,16 @@ class Unit {
    private:
     const int ID;
     const UnitType type;
-    const int health;
+    int health;
     const int power;
     const int attackCapacity;
 
-    const int timeStep;   // Tj
-    int destructionTime;  // Td
-    int firstAttackTime;  // Ta
-    int destructionDelay; // Dd
-    int firstAttackDelay; // Df
-    int battleTime;       // Db
+    const int timeStep;    // Tj
+    int destructionTime;   // Td
+    int firstAttackTime;   // Ta
+    int destructionDelay;  // Dd
+    int firstAttackDelay;  // Df
+    int battleTime;        // Db
 
     const Game* game;
 
@@ -35,6 +36,8 @@ class Unit {
     int getHealth() const;
     int getPower() const;
     int getAttackCapacity() const;
+
+    void setHealth(int h);
 
     bool setDestructionTime(int time);
     bool setFirstAttackTime(int time);

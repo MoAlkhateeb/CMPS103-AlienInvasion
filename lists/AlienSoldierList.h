@@ -8,13 +8,7 @@ class AlienSoldierList {
     LinkedQueue<AlienSoldier*> queue;
 
    public:
-    bool add(AlienSoldier* unit) { return queue.enqueue(unit); }
-
-    bool remove(AlienSoldier*& unit) { return queue.dequeue(unit); }
-
-    void print() {
-        int count = queue.getCount();
-        cout << count << " AS ";
-        queue.print();
-    }
+    bool add(AlienSoldier* unit);
+    bool remove(AlienSoldier*& unit);
+    void print();
 };

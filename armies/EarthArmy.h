@@ -15,6 +15,10 @@ class EarthArmy {
     EarthGunneryList gunneryList;
 
    public:
+    EarthSoldierList* getESList();
+    EarthTankList* getETList();
+    EarthGunneryList* getEGList();
+
     void print();
     bool addUnit(Unit* unit);
     bool attack();

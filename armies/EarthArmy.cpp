@@ -5,14 +5,13 @@
 bool EarthArmy::addUnit(Unit* unit) {
     switch (unit->getType()) {
         case E_SOLDIER:
-            soldierList.add(dynamic_cast<EarthSoldier*>(unit));
-            break;
+            return soldierList.add(dynamic_cast<EarthSoldier*>(unit));
         case E_TANK:
-            tankList.add(dynamic_cast<EarthTank*>(unit));
-            break;
+            return tankList.add(dynamic_cast<EarthTank*>(unit));
         case E_GUNNERY:
-            gunneryList.add(dynamic_cast<EarthGunnery*>(unit));
-            break;
+            return gunneryList.add(dynamic_cast<EarthGunnery*>(unit));
+        default:
+            return false;
     }
 }
 void EarthArmy::print() {
@@ -22,4 +21,9 @@ void EarthArmy::print() {
     gunneryList.print();
 }
 
-bool EarthArmy::attack() {}
+EarthSoldierList* EarthArmy::getESList() { return &soldierList;  }
+EarthTankList* EarthArmy::getETList() { return &tankList;}
+EarthGunneryList* EarthArmy::getEGList() { return &gunneryList;  }
+
+
+bool EarthArmy::attack() { return false; }

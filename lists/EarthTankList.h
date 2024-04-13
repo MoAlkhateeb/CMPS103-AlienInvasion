@@ -8,13 +8,7 @@ class EarthTankList {
     ArrayStack<EarthTank*> stack;
 
    public:
-    bool add(EarthTank* unit) { return stack.push(unit); }
-
-    bool remove(EarthTank*& unit) { return stack.pop(unit); }
-
-    void print() {
-        int count = stack.getCount();
-        cout << count << " ET ";
-        stack.print();
-    }
+    bool add(EarthTank* unit);
+    bool remove(EarthTank*& unit);
+    void print();
 };
