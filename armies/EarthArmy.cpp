@@ -3,6 +3,7 @@
 #include <iostream>
 
 bool EarthArmy::addUnit(Unit* unit) {
+    if (!unit) return false;
     switch (unit->getType()) {
         case E_SOLDIER:
             return soldierList.add(dynamic_cast<EarthSoldier*>(unit));
