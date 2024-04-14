@@ -3,6 +3,7 @@
 #include <iostream>
 
 bool AlienArmy::addUnit(Unit* unit1, Unit* unit2) {
+    if (!unit1) return false;
     if (!unit2) {
         switch (unit1->getType()) {
             case A_SOLDIER:

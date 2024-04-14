@@ -73,8 +73,12 @@ Unit* RandGen::generateRandomAlienUnit(int timeStep) {
         return generateUnit(alienID++, timeStep, power, health, capacity, A_SOLDIER);
     } else if (B < ASPercent + AMPercent) {
         return generateUnit(alienID++, timeStep, power, health, capacity, A_MONSTER);
-    } else {
+    } else if(B < ASPercent + AMPercent+ ADPercent) {
         return generateUnit(alienID++, timeStep, power, health, capacity, A_DRONE);
+    }
+    else
+    {
+        return nullptr;
     }
 }
 
@@ -93,9 +97,10 @@ Unit* RandGen::generateRandomEarthUnit(int timeStep) {
         return generateUnit(earthID++, timeStep, power, health, capacity, E_SOLDIER);
     } else if (B < ESPercent + ETPercent) {
         return generateUnit(earthID++, timeStep, power, health, capacity, E_TANK);
-    } else {
+    } else if(B < ESPercent + ETPercent+ EGPercent){
         return generateUnit(earthID++, timeStep, power, health, capacity, E_GUNNERY);
     }
+    else { return nullptr; }
 }
 
 int RandGen::getRandomNumber() {
