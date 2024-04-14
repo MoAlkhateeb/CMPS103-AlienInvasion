@@ -31,21 +31,26 @@ class Unit {
     Unit(int ID, UnitType type, int timeStep, int health, int power,
          int attackCapacity, const Game* game);
 
-int getID() const;
-UnitType getType() const;
-int getHealth() const;
-int getPower() const;
-int getAttackCapacity() const;
-int getDestructionTime() const;
-int getTimeStep() const;
-int getfirstAttackDelay()const;
-int getfirstAttackTime()const;
-int getBattleTime()const;
+    int getID() const;
+    UnitType getType() const;
 
-void setHealth(int h);
+    int getHealth() const;
+    int getPower() const;
+    int getAttackCapacity() const;
 
-bool setDestructionTime(int time);
-bool setFirstAttackTime(int time);
+    int getTimeStep() const;
+    int getDestructionTime() const;
+    int getFirstAttackDelay()const;
+    int getFirstAttackTime()const;
+    int getBattleTime()const;
 
-virtual void attack() = 0;
+    void setHealth(int h);
+
+    bool setDestructionTime(int time);
+    bool setFirstAttackTime(int time);
+
+    virtual void attack() = 0;
 };
+
+ostream& operator<<(ostream& os, const Unit& obj);
+ofstream& operator<<(ofstream& fs, const Unit& obj);

@@ -25,8 +25,9 @@ int Unit::getPower() const { return power; }
 int Unit::getAttackCapacity() const { return attackCapacity; }
 int Unit::getDestructionTime() const { return destructionTime; }
 int Unit::getTimeStep() const { return timeStep; }
-int Unit::getfirstAttackDelay() const{ return firstAttackDelay; }
-int Unit::getfirstAttackTime() const{ return firstAttackTime; }
+int Unit::getFirstAttackDelay() const{ return firstAttackDelay; }
+int Unit::getFirstAttackTime() const { return firstAttackTime; }
+
 int Unit::getBattleTime() const{ return battleTime; }
 bool Unit::setDestructionTime(int time) {
     if (time < timeStep || time < 0) return false;
@@ -54,7 +55,7 @@ ostream& operator<<(ostream& os, const Unit& obj) {
 
 ofstream& operator<<(ofstream& fs, const Unit& obj) {
     fs << obj.getDestructionTime() << " " << obj.getID() << " " << obj.getTimeStep() << " ";
-    fs << obj.getfirstAttackDelay() << " " << obj.getfirstAttackTime() << " ";
+    fs << obj.getFirstAttackDelay() << " " << obj.getFirstAttackTime() << " ";
     fs << obj.getBattleTime();
     return fs;
 }
