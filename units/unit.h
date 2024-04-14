@@ -48,5 +48,4 @@ bool setDestructionTime(int time);
 bool setFirstAttackTime(int time);
 
 virtual void attack() = 0;
-
 };
