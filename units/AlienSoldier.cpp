@@ -5,23 +5,23 @@ AlienSoldier::AlienSoldier(int ID, int timeStep, int health, int power,
     : Unit(ID, A_SOLDIER, timeStep, health, power, attackCapacity, game) {}
 
 void AlienSoldier::attack() {
-    EarthSoldierList *earthSoldierList = game->getEarthArmy()->getESList();
-    LinkedQueue<EarthSoldier *> tempSoldierList;
-    for (int i = 0; i < attackCapacity; i++){
-        EarthSoldier *earthSoldier;
-        if(earthSoldierList->remove(earthSoldier)){
-            tempSoldierList.enqueue(earthSoldier);
-        }
+    EarthSoldierList* earthSoldierList = game->getEarthArmy()->getESList();
+    LinkedQueue<EarthSoldier*>* tempSoldierList;
+    EarthSoldier *earthsoldier;
+    for (int i = 0; i < attackCapacity;i++){
+        earthSoldierList->remove(earthsoldier);
+        tempSoldierList->enqueue(earthsoldier);
     }
-    while (!tempSoldierList.isEmpty())
+    int tempSoldiernum = tempSoldierList->getCount();
+    for (int i = 0; i < tempSoldiernum; i++)
     {
-        EarthSoldier *earthSoldier;
-        tempSoldierList.dequeue(earthSoldier);
-        earthSoldier->setHealth(earthSoldier->getHealth() - power);
-        if(earthSoldier->getHealth() <= 0){
-            game->getKilled()->add(earthSoldier);
+        int damage = this->getPower() * (this->getHealth() / 100) / sqrt(tempSoldierList->getItem()->getHealth());
+        tempSoldierList->getItem()->setHealth(getHealth() - damage);
+        tempSoldierList->dequeue(earthsoldier);
+        if(earthsoldier->getHealth() <= 0){
+            game->getKilled()->add(earthsoldier);
         }else {
-            game->getEarthArmy()->addUnit(earthSoldier);
+            game->getEarthArmy()->addUnit(earthsoldier);
         }
     }
 }

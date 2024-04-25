@@ -13,9 +13,12 @@ void EarthSoldier::attack(){
         alienSoldierList->remove(alienSoldier);
         tempSoldierList->enqueue(alienSoldier);
     }
-    for (int i = 0; i < tempSoldierList->getCount();i++){
-        tempSoldierList->getItem()[i].setHealth(getHealth() - power);
-        tempSoldierList[i].dequeue(alienSoldier);
+    int tempSoldiernum = tempSoldierList->getCount();
+    for (int i = 0; i < tempSoldiernum; i++)
+    {
+        int damage = this->getPower() * (this->getHealth() / 100) / sqrt(tempSoldierList->getItem()->getHealth());
+        tempSoldierList->getItem()->setHealth(getHealth() - damage);
+        tempSoldierList->dequeue(alienSoldier);
         if(alienSoldier->getHealth() <= 0){
             game->getKilled()->add(alienSoldier);
         }else {
