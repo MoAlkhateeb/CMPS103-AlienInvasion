@@ -14,3 +14,12 @@ void AlienSoldierList::print() {
     cout << count << " AS ";
     queue.print();
 }
+bool AlienSoldierList::isEmpty(){
+    return queue.isEmpty();
+}
+int AlienSoldierList::getCount(){
+    return queue.getCount();
+}
+bool AlienSoldierList::peek(AlienSoldier* unit){
+    return queue.peek(unit);
+}

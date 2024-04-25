@@ -56,7 +56,9 @@ class LinkedQueue : public QueueADT<T> {
         frontEntry = frontPtr->getItem();
         return true;
     }
-
+    T getItem(){
+        return 
+    }
     void print() const override {
         Node<T>* temp = frontPtr;
         cout << "[";

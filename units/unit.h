@@ -11,7 +11,7 @@ class Game;
 enum UnitType { E_SOLDIER, E_TANK, E_GUNNERY, A_SOLDIER, A_MONSTER, A_DRONE };
 
 class Unit {
-   private:
+   protected:
     const int ID;
     const UnitType type;
     int health;

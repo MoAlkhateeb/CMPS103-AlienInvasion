@@ -13,3 +13,12 @@ void EarthSoldierList::print() {
     cout << count << " ES ";
     queue.print();
 }
+bool EarthSoldierList::isEmpty(){
+    return queue.isEmpty();
+}
+int EarthSoldierList::getCount(){
+    return queue.getCount();
+}
+bool EarthSoldierList::peek(EarthSoldier* unit){
+    return queue.peek(unit);
+}

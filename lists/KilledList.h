@@ -4,10 +4,10 @@
 #include "../units/Unit.h"
 
 class KilledList {
-   private:
+    private:
     LinkedQueue<Unit*> queue;
 
-   public:
+    public:
     bool add(Unit* unit);
     bool remove(Unit*& unit);
     void print();
