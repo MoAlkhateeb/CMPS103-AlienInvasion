@@ -1,7 +1,12 @@
 #include "AlienArmy.h"
 
 #include <iostream>
-
+void AlienArmy::print() {
+    cout << "============= Alien Army Alive Units =============" << endl;
+    soldierList.print();
+    monsterList.print();
+    droneList.print();
+}
 bool AlienArmy::addUnit(Unit* unit1, Unit* unit2) {
     if (!unit1) return false;
     if (!unit2) {
