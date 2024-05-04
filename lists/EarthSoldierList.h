@@ -4,11 +4,17 @@
 #include "../units/EarthSoldier.h"
 
 class EarthSoldierList {
-   private:
+    private:
     LinkedQueue<EarthSoldier*> queue;
+    // Node<T>* backPtr;
+    // Node<T>* frontPtr;
+    // int count;
 
-   public:
+    public:
     bool add(EarthSoldier* unit);
     bool remove(EarthSoldier*& unit);
     void print();
+    bool isEmpty();
+    int getCount();
+    bool peek(EarthSoldier* unit);
 };

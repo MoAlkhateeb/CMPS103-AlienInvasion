@@ -9,12 +9,12 @@
 using namespace std;
 
 class AlienArmy {
-   private:
+    private:
     AlienSoldierList soldierList;
     AlienDroneList droneList;
     AlienMonsterList monsterList;
 
-   public:
+    public:
     AlienSoldierList* getASList();
     AlienDroneList* getADList();
     AlienMonsterList* getAMList();

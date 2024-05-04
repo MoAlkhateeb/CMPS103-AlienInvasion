@@ -3,9 +3,9 @@
 #include "Unit.h"
 
 class EarthGunnery : public Unit {
-   public:
+    public:
     EarthGunnery(int ID, int timeStep, int health, int power,
-                 int attackCapacity, const Game* game);
+                int attackCapacity, const Game* game);
 
     int getPriority() const;
 
