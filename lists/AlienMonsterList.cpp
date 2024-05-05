@@ -14,3 +14,7 @@ void AlienMonsterList::print() {
     cout << count << " AM ";
     bag.print();
 }
+int AlienMonsterList::getCount(){
+    return bag.getCount();
+}
+bool AlienMonsterList::isEmpty() const{ return  bag.getCount() == 0; }
