@@ -39,18 +39,7 @@ void EarthGunnery::attack() {
     EarthGunnery *highestPriGunnery = nullptr;
     int highestPriority = -1;
 
-    for (int i = 0; i < egList->getCount();i++){
-        EarthGunnery *eg = nullptr;
-        egList->remove(eg);
-        if(eg){
-            int currentPriority = eg->getPriority();
-            if(currentPriority > highestPriority){
-                highestPriority = currentPriority;
-                highestPriGunnery = eg;
-            }
-            egList->add(eg);
-        }
-    }
+    egList->remove(highestPriGunnery);
     if(!highestPriGunnery){
         cout << "No Earth Gunnery available";
         return;
@@ -65,7 +54,16 @@ void EarthGunnery::attack() {
     AlienMonster *targetMonster = nullptr;
     if(monsterList->remove(targetMonster)){
         cout << "EarthGunnery" << highestPriGunnery->getID() << "attacks monster" << targetMonster->getID() << endl;
-    }else {
+        int damage = highestPriGunnery->getPower();
+        int currentHealth = targetMonster->getHealth();
+        if(currentHealth > damage){
+            targetMonster->setHealth(currentHealth - damage);
+        }else {
+            targetMonster->setHealth(0);
+        }
+    }
+    else
+    {
         cout << "No monsters to attack!" << endl;
     }
 
@@ -74,9 +72,22 @@ void EarthGunnery::attack() {
     AlienDrone *secondDrone = nullptr;
     if(droneList->remove(firstDrone,secondDrone)){
         cout << "EarthGunnery" << highestPriGunnery->getID() << "attacks drones" << firstDrone->getID() << "and" <<secondDrone->getID() << endl;
-    } else if(firstDrone ){
-        cout << "EarthGunnery" << highestPriGunnery->getID() << "attacks drone" << firstDrone->getID() << endl;
-    } else {
+        int damage = highestPriGunnery->getPower();
+        int currentHealth1 = firstDrone->getHealth();
+        int currentHealth2 = secondDrone->getHealth();
+        if(currentHealth1 > damage){
+            firstDrone->setHealth(currentHealth1 - damage);
+        }else {
+            firstDrone->setHealth(0);
+        }
+        if(currentHealth2 > damage){
+            secondDrone->setHealth(currentHealth2 - damage);
+        }else{
+            secondDrone->setHealth(0);
+        }
+    }
+    else
+    {
         cout << "No drones available to attack" << endl;
     }
 }
