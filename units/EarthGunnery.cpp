@@ -44,13 +44,7 @@ void EarthGunnery::attack() {
         cout << "No Earth Gunnery available";
         return;
     }
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> monsterDist(0, monsterList->getCount() - 1);
-    int monsterIndex = monsterDist(gen);
-    AlienMonster *targetMonster = nullptr;
-    int monsterIndex = monsterDist(gen); // Pick random monster
-    
+
     AlienMonster *targetMonster = nullptr;
     if(monsterList->remove(targetMonster)){
         cout << "EarthGunnery" << highestPriGunnery->getID() << "attacks monster" << targetMonster->getID() << endl;
