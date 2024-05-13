@@ -57,7 +57,7 @@ class LinkedQueue : public QueueADT<T> {
         return true;
     }
     T getItem(){
-        return 
+        return frontPtr->getItem();
     }
     void print() const override {
         Node<T>* temp = frontPtr;

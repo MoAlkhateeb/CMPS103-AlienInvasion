@@ -1,5 +1,5 @@
-#include "AlienSoldier.h"
-#include "game.h"
+#include "../units/AlienSoldier.h"
+#include "../game.h"
 AlienSoldier::AlienSoldier(int ID, int timeStep, int health, int power,
                            int attackCapacity, const Game* game)
     : Unit(ID, A_SOLDIER, timeStep, health, power, attackCapacity, game) {}

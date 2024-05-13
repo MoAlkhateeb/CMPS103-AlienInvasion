@@ -1,7 +1,7 @@
 #include "EarthTank.h"
-#include "game.h"
-#include "AlienArmy.h"
-#include "structures/ArrayStack.h"
+#include "../game.h"
+#include "../armies/AlienArmy.h"
+#include "../structures/ArrayStack.h"
 using namespace std;
 EarthTank::EarthTank(int ID, int timeStep, int health, int power,
                      int attackCapacity, const Game *game)

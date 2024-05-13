@@ -1,5 +1,5 @@
-#include "EarthSoldier.h"
-#include "game.h"
+#include "../units/EarthSoldier.h"
+#include "../game.h"
 // #include "AlienArmy.h"
 EarthSoldier::EarthSoldier(int ID, int timeStep, int health, int power,
                             int attackCapacity, const Game* game)

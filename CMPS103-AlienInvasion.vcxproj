@@ -119,7 +119,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="lists\tests.cpp" />
     <ClCompile Include="random_generator\randomGen.cpp" />
     <ClCompile Include="units\AlienDrone.cpp" />
     <ClCompile Include="units\AlienMonster.cpp" />
