@@ -50,10 +50,13 @@ void EarthGunnery::attack() {
         cout << "EarthGunnery" << highestPriGunnery->getID() << "attacks monster" << targetMonster->getID() << endl;
         int damage = highestPriGunnery->getPower();
         int currentHealth = targetMonster->getHealth();
-        if(currentHealth > damage){
-            targetMonster->setHealth(currentHealth - damage);
-        }else {
-            targetMonster->setHealth(0);
+        targetMonster->setHealth(currentHealth - damage);
+        if(currentHealth <=0){
+            game->getKilled()->add(targetMonster);
+        }
+        else
+        {
+            game->getAlienArmy()->getAMList()->add(targetMonster);
         }
     }
     else
@@ -65,19 +68,27 @@ void EarthGunnery::attack() {
     AlienDrone *firstDrone = nullptr;
     AlienDrone *secondDrone = nullptr;
     if(droneList->remove(firstDrone,secondDrone)){
-        cout << "EarthGunnery" << highestPriGunnery->getID() << "attacks drones" << firstDrone->getID() << "and" <<secondDrone->getID() << endl;
+        // cout << "EarthGunnery" << highestPriGunnery->getID() << "attacks drones" << firstDrone->getID() << "and" <<secondDrone->getID() << endl;
         int damage = highestPriGunnery->getPower();
         int currentHealth1 = firstDrone->getHealth();
-        int currentHealth2 = secondDrone->getHealth();
-        if(currentHealth1 > damage){
-            firstDrone->setHealth(currentHealth1 - damage);
-        }else {
-            firstDrone->setHealth(0);
+        int currentHealth2;
+        if(secondDrone)
+            currentHealth2 = secondDrone->getHealth();
+        firstDrone->setHealth(currentHealth1 - damage);
+        if (firstDrone->getHealth() <= 0)
+        {
+            game->getKilled()->add(firstDrone);
         }
-        if(currentHealth2 > damage){
-            secondDrone->setHealth(currentHealth2 - damage);
-        }else{
-            secondDrone->setHealth(0);
+        else {
+            game->getAlienArmy()->getADList()->add(firstDrone);
+        }
+        secondDrone->setHealth(currentHealth2 - damage);
+        if(secondDrone && secondDrone->getHealth() <= 0){
+            game->getKilled()->add(secondDrone);
+        }
+        else
+        {
+            game->getAlienArmy()->getADList()->add(secondDrone);
         }
     }
     else

@@ -15,9 +15,9 @@ void AlienSoldier::attack() {
     int tempSoldiernum = tempSoldierList->getCount();
     for (int i = 0; i < tempSoldiernum; i++)
     {
-        int damage = this->getPower() * (this->getHealth() / 100) / sqrt(tempSoldierList->getItem()->getHealth());
-        tempSoldierList->getItem()->setHealth(getHealth() - damage);
         tempSoldierList->dequeue(earthsoldier);
+        int damage = this->getPower() * (this->getHealth() / 100) / sqrt(earthsoldier->getHealth());
+        earthsoldier->setHealth(getHealth() - damage);
         if(earthsoldier->getHealth() <= 0){
             game->getKilled()->add(earthsoldier);
         }else {
