@@ -11,3 +11,6 @@ void EarthTankList::print() {
     cout << count << " ET ";
     stack.print();
 }
+bool EarthTankList::isEmpty() const {
+    return stack.isEmpty();
+}
