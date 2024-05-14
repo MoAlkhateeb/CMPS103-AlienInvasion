@@ -72,7 +72,7 @@ bool Game::loadParameters(const string &filename) {
     return true;
 }
 
-Game::Game(const string &inputFile): randGen(this), timeStep(0) {
+Game::Game(const string &inputFile): randGen(this), timeStep(0), won(TBD) {
     bool loaded = loadParameters(inputFile);
 
     if (!loaded) {
@@ -178,3 +178,21 @@ KilledList* Game::getKilled() const { return (KilledList*) &killed; }
 TankMaintainList* Game::getTankMaintainList() const { return (TankMaintainList*) &tankMaintain; }
 HealList* Game::getHealList() const { return (HealList*) &heal; }
 EarthSoldierMaintainList* Game::getEarthSoldierMaintainList() const { return (EarthSoldierMaintainList*) &soldierMaintain;  }
+
+bool Game::generateOutput(const string& filename) {
+    ofstream file(filename, 'w');
+    if (!file.is_open()) {
+        cout << "Error Creating File. " << endl;
+        return false;
+    }
+
+    file << "Td ID Tj Df Dd Db" << endl;
+    Unit* unit;
+    while (killed.remove(unit)) {
+        file << *unit << endl;
+    }
+
+    // TODO
+
+    return true;
+}

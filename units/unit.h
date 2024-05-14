@@ -32,6 +32,8 @@ class Unit {
     Unit(int ID, UnitType type, int timeStep, int health, int power,
          int attackCapacity, const Game* game);
 
+    Game* getGame() const;
+
     int getID() const;
     UnitType getType() const;
 

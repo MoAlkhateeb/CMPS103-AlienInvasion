@@ -20,7 +20,7 @@ Unit::Unit(int ID, UnitType type, int timeStep, int health, int power,
 int Unit::getID() const { return ID; }
 
 UnitType Unit::getType() const { return type; }
-
+Game* Unit::getGame() const { return (Game*) game;  }
 int Unit::getInitialHealth() const { return initialHealth; }
 int Unit::getHealth() const { return health; }
 int Unit::getPower() const { return power; }

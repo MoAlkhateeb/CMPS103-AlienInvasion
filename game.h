@@ -19,6 +19,8 @@
 
 using namespace std;
 
+enum WON { TBD, ALIENS, EARTH, DRAW };
+
 class Game {
    private:
     int timeStep;
@@ -31,6 +33,8 @@ class Game {
     EarthSoldierMaintainList soldierMaintain;
     RandGen randGen;
 
+    WON won;
+
     bool loadParameters(const string &filename);
 
    public:
@@ -42,6 +46,8 @@ class Game {
     HealList* getHealList() const;
     TankMaintainList* getTankMaintainList() const;
     EarthSoldierMaintainList* getEarthSoldierMaintainList() const;
+     
+    bool generateOutput(const string& filename);
 
     void runInteractive();
 
