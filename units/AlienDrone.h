@@ -7,5 +7,5 @@ class AlienDrone : public Unit {
     AlienDrone(int ID, int timeStep, int health, int power, int attackCapacity,
                const Game* game);
 
-    void attack() override;
+    void attack(int timeStep) override;
 };

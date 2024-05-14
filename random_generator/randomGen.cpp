@@ -20,7 +20,7 @@ void RandGen::createUnits(int timeStep) {
         for (int i = 0; i < N; i++) {
             Unit* generatedUnit = generateRandomEarthUnit(timeStep);
             if (generatedUnit->getType() == E_HEAL) {
-                game->getHealList()->add(generatedUnit);
+                game->getHealList()->add(dynamic_cast<EarthHeal*>(generatedUnit));
             }
             else {
                 earthArmy->addUnit(generatedUnit);

@@ -14,3 +14,8 @@ void AlienMonsterList::print() {
     cout << count << " AM ";
     bag.print();
 }
+
+
+int AlienMonsterList::getCount() const {
+    return bag.getCount();
+}

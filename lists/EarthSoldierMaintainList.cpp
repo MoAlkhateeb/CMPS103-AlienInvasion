@@ -17,3 +17,7 @@ void EarthSoldierMaintainList::print() {
     cout << count << ((count == 1) ? " unit " : " units ");
     priQueue.print();
 }
+
+int EarthSoldierMaintainList::getCount() const {
+    return priQueue.getCount();
+}

@@ -9,5 +9,5 @@ class EarthGunnery : public Unit {
 
     int getPriority() const;
 
-    void attack() override;
+    void attack(int timeStep) override;
 };

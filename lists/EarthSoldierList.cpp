@@ -13,3 +13,7 @@ void EarthSoldierList::print() {
     cout << count << " ES ";
     queue.print();
 }
+
+int EarthSoldierList::getCount() const {
+    return queue.getCount();
+}

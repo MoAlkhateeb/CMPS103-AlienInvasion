@@ -3,8 +3,8 @@
 int RandGen::earthID = MINEARTHID;
 int RandGen::alienID = MINALIENID;
 
-bool Game::loadParameters(const string &filename) {
-    ifstream file(filename);
+bool Game::loadParameters() {
+    ifstream file(inputFile);
 
     if (!file.is_open()) {
         cerr << "Error: file not found" << endl;
@@ -72,8 +72,8 @@ bool Game::loadParameters(const string &filename) {
     return true;
 }
 
-Game::Game(const string &inputFile): randGen(this), timeStep(0), won(TBD) {
-    bool loaded = loadParameters(inputFile);
+Game::Game(const string &inputFile, const string &outputFile): randGen(this), timeStep(0), won(TBD), inputFile(inputFile), outputFile(outputFile) {
+    bool loaded = loadParameters();
 
     if (!loaded) {
         cout << "Could not load file: " << inputFile << endl;
@@ -81,74 +81,39 @@ Game::Game(const string &inputFile): randGen(this), timeStep(0), won(TBD) {
     }
 }
 
+WON Game::checkWinCondition() {
 
-void Game::runInteractive() {
-    // This does phase 1.2 test code for now.
+    if (aliens.getCount() == 0 && earth.getCount() > 0) {
+        return EARTH;
+    }
+    else if (aliens.getCount() > 0 && earth.getCount() == 0) {
+        return ALIENS;
+    }
+    else if (aliens.getCount() == 0 && earth.getCount() == 0) {
+        return DRAW;
+    }
+    else {
+        return TBD;
+    }
+}
 
-    int X;
-    for (; timeStep < 50; timeStep++) {
+void Game::run(Mode operation) {
+    while (true) {
         randGen.createUnits(timeStep);
 
-        X = randGen.getRandomNumber();
+        earth.attack(timeStep);
+        aliens.attack(timeStep);
 
-        if (X < 10) {
-            EarthSoldier* ES;
-            EarthSoldierList* ESList = earth.getESList();
-            if (ESList->remove(ES))
-                ESList->add(ES);
-        }
-        else if (X < 20) {
-            EarthTank* ET;
-            EarthTankList* ETList = earth.getETList();
-            if (ETList->remove(ET))
-                killed.add(ET); 
-        }
-        else if (X < 30) {
-            EarthGunnery* EG;
-            EarthGunneryList* EGList = earth.getEGList();
-            if (EGList->remove(EG)) {
-                EG->setHealth(EG->getHealth() / 2);
-                EGList->add(EG);
-            }
-        }
-        else if (X < 40) {
-            LinkedQueue<AlienSoldier*> tempList;
-            AlienSoldierList* ASList = aliens.getASList();
-
-            AlienSoldier* AS;
-            for (int i = 0; i < 5; i++) {
-                if (ASList->remove(AS)) {
-                    AS->setHealth(AS->getHealth() - 1);
-                    tempList.enqueue(AS);
-                }
-            }
-
-            for (int i = 0; i < 5; i++) {
-                if(tempList.dequeue(AS))
-                    ASList->add(AS);
-            }
-        }
-        else if (X < 50) {
-            AlienMonsterList* AMList = aliens.getAMList();
-            
-            AlienMonster* AM;
-            for (int i = 0; i < 5; i++) {
-                if (AMList->remove(AM))
-                    AMList->add(AM);
-            }
-        }
-        else if (X < 60) {
-            AlienDroneList* ADList = aliens.getADList();
-            AlienDrone* begin, *end;
-            for (int i = 0; i < 3; i++) {
-                if (ADList->remove(begin, end)) {
-                    killed.add(begin);
-                    killed.add(end);
-                }
-            }
+        if (operation == INTERACTIVE) {
+            print();
+            cout << "Press any key to move to the next timestep. " << endl;
+            cin.get();
         }
 
-        print();
+        if (timeStep >= 40 && checkWinCondition() != TBD)
+            break;
+
+        timeStep++;
     }
 }
 
@@ -179,20 +144,143 @@ TankMaintainList* Game::getTankMaintainList() const { return (TankMaintainList*)
 HealList* Game::getHealList() const { return (HealList*) &heal; }
 EarthSoldierMaintainList* Game::getEarthSoldierMaintainList() const { return (EarthSoldierMaintainList*) &soldierMaintain;  }
 
-bool Game::generateOutput(const string& filename) {
-    ofstream file(filename, 'w');
+bool Game::generateOutput() {
+    ofstream file(outputFile, 'w');
     if (!file.is_open()) {
         cout << "Error Creating File. " << endl;
         return false;
     }
 
+    int totalDfEarth = 0, totalDdEarth = 0, totalDbEarth = 0;
+    int ESDestructed = 0, ETDestructed = 0, EGDestructed = 0, HUDestructed = 0;
+
+    int totalDfAlien = 0, totalDdAlien = 0, totalDbAlien = 0;
+    int ASDestructed = 0, AMDestructed = 0, ADDestructed = 0;
+
+ 
     file << "Td ID Tj Df Dd Db" << endl;
     Unit* unit;
+    bool isEarth;
     while (killed.remove(unit)) {
         file << *unit << endl;
+
+        switch (unit->getType()) {
+        case E_GUNNERY:
+            EGDestructed++;
+            isEarth = true;
+            break;
+        case E_HEAL:
+            HUDestructed++;
+            isEarth = true;
+            break;
+        case E_SOLDIER:
+            ESDestructed++;
+            isEarth = true;
+            break;
+        case E_TANK:
+            ETDestructed++;
+            isEarth = true;
+            break;
+        case A_SOLDIER:
+            ASDestructed++;
+            isEarth = false;
+            break;
+        case A_MONSTER:
+            AMDestructed++;
+            isEarth = false;
+            break;
+        case A_DRONE:
+            ADDestructed++;
+            isEarth = false;
+            break;
+        }
+
+        if (isEarth) {
+            totalDfEarth += unit->getFirstAttackDelay();
+            totalDdEarth += unit->getDestructionTime();
+            totalDbEarth += unit->getBattleTime();
+        }
+        else {
+            totalDfAlien += unit->getFirstAttackDelay();
+            totalDdAlien += unit->getDestructionTime();
+            totalDbAlien += unit->getBattleTime();
+        }
     }
 
-    // TODO
+    float totalEarthDestructed = EGDestructed + ESDestructed + ETDestructed + HUDestructed;
+    float totalAliensDestructed = ASDestructed + AMDestructed + ADDestructed;
+
+    file << "Battle Result: ";
+
+    switch (won) {
+    case EARTH:
+        file << "Win" << endl;
+        break;
+    case ALIENS:
+        file << "Loss" << endl;
+        break;
+    case DRAW:
+        file << "Draw" << endl;
+        break;
+    default:
+        file << "TBD" << endl;
+    }
+
+    int ESCount = earth.getESList()->getCount();
+    int EGCount = earth.getEGList()->getCount();
+    int ETCount = earth.getETList()->getCount();
+    int HUCount = heal.getCount();
+    float EarthTotal = ESCount + EGCount + ETCount + HUCount + totalEarthDestructed;
+
+
+    file << endl << endl << "EARTH ARMY STATS: " << endl;
+    file << "ES: " << ESCount << endl;
+    file << "ET: " << ETCount << endl;
+    file << "EG: " << EGCount << endl;
+    file << "HU: " << HUCount << endl;
+
+    file << endl << "% Destructed ES: " << ESDestructed / ESCount * 100;
+    file << endl << "% Destructed ET: " << ETDestructed / ETCount * 100;
+    file << endl << "% Destructed EG: " << EGDestructed / EGCount * 100;
+    file << endl << "% Destructed HU: " << HUDestructed / HUCount * 100 << endl;
+
+
+    file << endl << "% Destructed: " << totalEarthDestructed / EarthTotal * 100 << endl;
+
+    file << endl << "Average Df: " << totalDfEarth / totalEarthDestructed * 100;
+    file << endl << "Average Dd: " << totalDdEarth / totalEarthDestructed * 100;
+    file << endl << "Average Db: " << totalDbEarth / totalEarthDestructed * 100 << endl;
+
+
+    file << "%Df/Db: " << totalDfEarth / (float)totalDbEarth * 100 << endl;
+    file << "%Dd/Db: " << totalDdEarth / (float)totalDbEarth * 100 << endl << endl;
+
+
+    int ASCount = aliens.getASList()->getCount();
+    int AMCount = aliens.getAMList()->getCount();
+    int ADCount = aliens.getADList()->getCount();
+    float AliensTotal = ASCount + AMCount + ADCount + totalAliensDestructed;
+
+    file << endl << endl << "ALIEN ARMY STATS: " << endl;
+    file << "AS: " << ASCount << endl;
+    file << "AM: " << AMCount << endl;
+    file << "AD: " << ADCount << endl;
+
+    file << endl << "% Destructed AS: " << ASDestructed / ASCount * 100;
+    file << endl << "% Destructed AM: " << AMDestructed / AMCount * 100;
+    file << endl << "% Destructed AD: " << ADDestructed / ADCount * 100;
+
+
+    file << endl << "% Destructed: " << totalAliensDestructed / AliensTotal * 100 << endl;
+
+    file << endl << "Average Df: " << totalDfAlien / totalAliensDestructed * 100;
+    file << endl << "Average Dd: " << totalDdAlien / totalAliensDestructed * 100;
+    file << endl << "Average Db: " << totalDbAlien / totalAliensDestructed * 100 << endl;
+
+
+    file << "%Df/Db: " << totalDfAlien / (float)totalDbAlien * 100 << endl;
+    file << "%Dd/Db: " << totalDdAlien / (float)totalDbAlien * 100 << endl << endl;
+
 
     return true;
 }

@@ -11,4 +11,6 @@ class AlienDroneList {
     bool add(AlienDrone* unit1, AlienDrone* unit2 = nullptr);
     bool remove(AlienDrone*& unit1, AlienDrone*& unit2);
     void print();
+
+    int getCount() const;
 };

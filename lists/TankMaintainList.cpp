@@ -13,3 +13,7 @@ void TankMaintainList::print() {
     cout << count << ((count == 1) ? " unit " : " units ");
     queue.print();
 }
+
+int TankMaintainList::getCount() const {
+    return queue.getCount();
+}

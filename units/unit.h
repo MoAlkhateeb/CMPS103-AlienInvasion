@@ -54,7 +54,7 @@ class Unit {
     bool setDestructionTime(int time);
     bool setFirstAttackTime(int time);
 
-    virtual void attack() = 0;
+    virtual void attack(int timeStep) = 0;
 };
 
 ostream& operator<<(ostream& os, const Unit& obj);

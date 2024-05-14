@@ -21,5 +21,7 @@ class EarthArmy {
 
     void print();
     bool addUnit(Unit* unit);
-    bool attack();
+    bool attack(int timeStep);
+
+    int EarthArmy::getCount() const;
 };

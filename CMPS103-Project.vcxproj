@@ -133,7 +133,7 @@
     <ClCompile Include="lists\HealList.cpp" />
     <ClCompile Include="lists\KilledList.cpp" />
     <ClCompile Include="lists\TankMaintainList.cpp" />
-    <ClCompile Include="phase-1_2-testCode.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="random_generator\randomGen.cpp" />
     <ClCompile Include="units\AlienDrone.cpp" />
     <ClCompile Include="units\AlienMonster.cpp" />

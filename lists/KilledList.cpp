@@ -13,3 +13,7 @@ void KilledList::print() {
     cout << count << ((count == 1) ? " unit " : " units ");
     queue.print();
 }
+
+int KilledList::getCount() const {
+    return queue.getCount();
+}

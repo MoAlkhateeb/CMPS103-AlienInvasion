@@ -11,4 +11,6 @@ public:
     bool add(Unit* unit);
     bool remove(Unit*& unit);
     void print();
+
+    int getCount() const;
 };

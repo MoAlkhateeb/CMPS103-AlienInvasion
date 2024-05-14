@@ -37,4 +37,9 @@ AlienDroneList* AlienArmy::getADList() { return &droneList;  }
 AlienMonsterList* AlienArmy::getAMList() { return &monsterList;  }
 
 
-bool AlienArmy::attack() { return false; }
+int AlienArmy::getCount() const {
+
+    return droneList.getCount() + soldierList.getCount() + monsterList.getCount();
+}
+
+bool AlienArmy::attack(int timeStep) { return false; }

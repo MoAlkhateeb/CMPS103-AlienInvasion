@@ -32,7 +32,7 @@ int Unit::getFirstAttackTime() const { return firstAttackTime; }
 
 int Unit::getBattleTime() const{ return battleTime; }
 bool Unit::setDestructionTime(int time) {
-    if (time < timeStep || time < 0) return false;
+    if (time < timeStep || time < 0 || destructionTime != -1) return false;
     destructionTime = time;
     destructionDelay = destructionTime - firstAttackTime;
     battleTime = destructionTime - timeStep;
@@ -40,7 +40,7 @@ bool Unit::setDestructionTime(int time) {
 }
 
 bool Unit::setFirstAttackTime(int time) {
-    if (time < timeStep || time < 0) return false;
+    if (time < timeStep || time < 0 || firstAttackTime != -1) return false;
     firstAttackTime = time;
     firstAttackDelay = firstAttackTime - timeStep;
     return true;

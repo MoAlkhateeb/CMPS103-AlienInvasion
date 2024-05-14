@@ -9,4 +9,4 @@ int EarthGunnery::getPriority() const {
     return getHealth() + 0.7 * getPower();
 }
 
-void EarthGunnery::attack() {}
+void EarthGunnery::attack(int timeStep) {}

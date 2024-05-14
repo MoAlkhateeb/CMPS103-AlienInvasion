@@ -21,5 +21,6 @@ class AlienArmy {
 
     void print();
     bool addUnit(Unit* unit1, Unit* unit2 = nullptr);
-    bool attack();
+    bool attack(int timeStep);
+    int getCount() const;
 };

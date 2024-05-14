@@ -27,4 +27,8 @@ EarthTankList* EarthArmy::getETList() { return &tankList;}
 EarthGunneryList* EarthArmy::getEGList() { return &gunneryList;  }
 
 
-bool EarthArmy::attack() { return false; }
+bool EarthArmy::attack(int timeStep) { return false; }
+
+int EarthArmy::getCount() const {
+    return soldierList.getCount() + tankList.getCount() + gunneryList.getCount();
+}

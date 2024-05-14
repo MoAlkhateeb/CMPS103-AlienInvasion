@@ -14,3 +14,7 @@ void AlienSoldierList::print() {
     cout << count << " AS ";
     queue.print();
 }
+
+int AlienSoldierList::getCount() const {
+    return queue.getCount();
+}

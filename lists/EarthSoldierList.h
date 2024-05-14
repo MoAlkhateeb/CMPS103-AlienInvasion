@@ -11,4 +11,6 @@ class EarthSoldierList {
     bool add(EarthSoldier* unit);
     bool remove(EarthSoldier*& unit);
     void print();
+
+    int getCount() const;
 };

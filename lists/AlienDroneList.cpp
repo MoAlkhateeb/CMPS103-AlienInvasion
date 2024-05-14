@@ -26,3 +26,8 @@ void AlienDroneList::print() {
     cout << count << " AD ";
     deque.print();
 }
+
+
+int AlienDroneList::getCount() const {
+    return deque.getCount();
+}

@@ -11,4 +11,6 @@ class AlienSoldierList {
     bool add(AlienSoldier* unit);
     bool remove(AlienSoldier*& unit);
     void print();
+
+    int getCount() const;
 };

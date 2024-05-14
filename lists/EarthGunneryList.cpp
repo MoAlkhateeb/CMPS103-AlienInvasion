@@ -16,3 +16,7 @@ void EarthGunneryList::print() {
     cout << count << " EG ";
     priQueue.print();
 }
+
+int EarthGunneryList::getCount() const {
+    return priQueue.getCount();
+}

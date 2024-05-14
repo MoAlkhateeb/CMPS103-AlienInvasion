@@ -1,14 +1,16 @@
 #pragma once
 
 #include "../structures/ArrayStack.h"
-#include "../units/Unit.h"
+#include "../units/EarthHeal.h"
 
 class HealList {
 private:
-    ArrayStack<Unit*> stack;
+    ArrayStack<EarthHeal*> stack;
 
 public:
-    bool add(Unit* unit);
-    bool remove(Unit*& unit);
+    bool add(EarthHeal* unit);
+    bool remove(EarthHeal*& unit);
     void print();
+
+    int getCount() const;
 };

@@ -19,6 +19,7 @@
 
 using namespace std;
 
+enum Mode { INTERACTIVE = 1, SILENT };
 enum WON { TBD, ALIENS, EARTH, DRAW };
 
 class Game {
@@ -35,10 +36,13 @@ class Game {
 
     WON won;
 
-    bool loadParameters(const string &filename);
+    const string outputFile;
+    const string inputFile;
+
+    bool loadParameters();
 
    public:
-    Game(const string &inputFile);
+    Game(const string& inputFile, const string& outputFile);
 
     EarthArmy* getEarthArmy() const;
     AlienArmy* getAlienArmy() const;
@@ -47,9 +51,10 @@ class Game {
     TankMaintainList* getTankMaintainList() const;
     EarthSoldierMaintainList* getEarthSoldierMaintainList() const;
      
-    bool generateOutput(const string& filename);
+    bool generateOutput();
+    WON Game::checkWinCondition();
 
-    void runInteractive();
+    void run(Mode operation);
 
     void print();
 };
