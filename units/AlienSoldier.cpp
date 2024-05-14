@@ -17,7 +17,7 @@ void AlienSoldier::attack(int timeStep, Mode operation) {
 
     LinkedQueue<EarthSoldier*> temp;
 
-    if (operation == INTERACTIVE)
+    if (operation == INTERACTIVE && game->getEarthArmy()->getESList()->getCount())
         cout << "AS " << getID() << " shots [ ";
 
     for (int i = AttackCapacity; i > 0; i--)
@@ -30,6 +30,8 @@ void AlienSoldier::attack(int timeStep, Mode operation) {
             initialHealth = enemy->getHealth();
             enemy->setHealth(initialHealth - getDamage(enemy));
             setFirstAttackTime(timeStep);
+            if (operation == INTERACTIVE)
+                cout << enemy->getID() << " ";
         }
 
 
@@ -43,12 +45,9 @@ void AlienSoldier::attack(int timeStep, Mode operation) {
         else {
             temp.enqueue(enemy);
         }
-
-        if (operation == INTERACTIVE)
-            cout << enemy->getID() << " ";
     }
 
-    if (operation == INTERACTIVE)
+    if (operation == INTERACTIVE && game->getEarthArmy()->getESList()->getCount())
         cout << "]" << endl;
 
     while (!temp.isEmpty())
