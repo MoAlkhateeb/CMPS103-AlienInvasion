@@ -42,6 +42,7 @@ class Game {
     bool loadParameters();
 
    public:
+
     Game(const string& inputFile, const string& outputFile);
 
     EarthArmy* getEarthArmy() const;

@@ -101,13 +101,19 @@ void Game::run(Mode operation) {
     while (true) {
         randGen.createUnits(timeStep);
 
-        earth.attack(timeStep);
-        aliens.attack(timeStep);
-
         if (operation == INTERACTIVE) {
             print();
+
+            cout <<  "============== Units fighting at current step ==============" << endl;
+            earth.attack(timeStep, operation);
+            aliens.attack(timeStep, operation);
+
             cout << "Press any key to move to the next timestep. " << endl;
             cin.get();
+        }
+        else {
+            earth.attack(timeStep, operation);
+            aliens.attack(timeStep, operation);
         }
 
         if (timeStep >= 40 && checkWinCondition() != TBD)

@@ -42,4 +42,36 @@ int AlienArmy::getCount() const {
     return droneList.getCount() + soldierList.getCount() + monsterList.getCount();
 }
 
-bool AlienArmy::attack(int timeStep) { return false; }
+bool AlienArmy::attack(int timeStep, Mode operation) {
+
+    if (!droneList.getCount() && !soldierList.getCount() && !monsterList.getCount()) {
+        return false;
+    }
+
+    AlienDrone* AD1;
+    AlienDrone* AD2;
+    AlienSoldier* AS;
+    AlienMonster* AM;
+
+    if (droneList.remove(AD1, AD2)) {
+        if (AD1 && AD2) {
+            AD1->attack(timeStep, operation);
+            AD2->attack(timeStep, operation);
+            droneList.add(AD1, AD2);
+        }
+        else {
+            droneList.add(AD1);
+        }
+    }
+
+    if (soldierList.remove(AS)) {
+        AS->attack(timeStep, operation);
+    }
+    if (monsterList.remove(AM)) {
+        AM->attack(timeStep, operation);
+    }
+
+
+    return true;
+
+}

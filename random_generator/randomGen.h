@@ -1,10 +1,11 @@
 #pragma once
 
 #include <random>
-
 #include "../units/Unit.h"
 
 using namespace std;
+
+class Game;
 
 typedef struct range {
     int start, end;

@@ -7,6 +7,7 @@
 using namespace std;
 
 class Game;
+enum Mode;
 
 enum UnitType { E_SOLDIER, E_TANK, E_GUNNERY, E_HEAL, A_SOLDIER, A_MONSTER, A_DRONE };
 
@@ -54,7 +55,7 @@ class Unit {
     bool setDestructionTime(int time);
     bool setFirstAttackTime(int time);
 
-    virtual void attack(int timeStep) = 0;
+    virtual void attack(int timeStep, Mode operation) = 0;
 };
 
 ostream& operator<<(ostream& os, const Unit& obj);

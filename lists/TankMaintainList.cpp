@@ -1,11 +1,11 @@
 #include "TankMaintainList.h"
 
-bool TankMaintainList::add(Unit* unit) {
+bool TankMaintainList::add(EarthTank* unit) {
     if (!unit) return false;
     return queue.enqueue(unit);
 }
 
-bool TankMaintainList::remove(Unit*& unit) { return queue.dequeue(unit); }
+bool TankMaintainList::remove(EarthTank*& unit) { return queue.dequeue(unit); }
 
 void TankMaintainList::print() {
     int count = queue.getCount();

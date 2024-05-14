@@ -1,15 +1,15 @@
 #pragma once
 
 #include "../structures/LinkedQueue.h"
-#include "../units/Unit.h"
+#include "../units/EarthTank.h"
 
 class TankMaintainList {
 private:
-    LinkedQueue<Unit*> queue;
+    LinkedQueue<EarthTank*> queue;
 
 public:
-    bool add(Unit* unit);
-    bool remove(Unit*& unit);
+    bool add(EarthTank* unit);
+    bool remove(EarthTank*& unit);
     void print();
 
     int getCount() const;

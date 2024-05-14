@@ -48,11 +48,6 @@ bool Unit::setFirstAttackTime(int time) {
 
 int Unit::getDamage(Unit* other) const {
     int damage = ((power * health) / 100.0) / sqrt(other->getHealth());
-
-    if (type == E_HEAL) {
-        damage = damage * -1;
-    }
-
     return damage;
 }
 

@@ -1,5 +1,4 @@
 #include "EarthArmy.h"
-
 #include <iostream>
 
 bool EarthArmy::addUnit(Unit* unit) {
@@ -27,7 +26,32 @@ EarthTankList* EarthArmy::getETList() { return &tankList;}
 EarthGunneryList* EarthArmy::getEGList() { return &gunneryList;  }
 
 
-bool EarthArmy::attack(int timeStep) { return false; }
+bool EarthArmy::attack(int timeStep, Mode operation) {
+
+    if (!soldierList.getCount() && !tankList.getCount() && !gunneryList.getCount()) {
+        return false;
+    }
+
+    EarthSoldier* ES;
+    EarthTank* ET;
+    EarthGunnery* EG;
+
+    if (soldierList.remove(ES)) {
+        ES->attack(timeStep, operation);
+        soldierList.add(ES);
+    }
+    
+    if (tankList.remove(ET)) {
+        ET->attack(timeStep, operation);
+        tankList.add(ET);
+    }
+    if (gunneryList.remove(EG)) {
+        EG->attack(timeStep, operation);
+        gunneryList.add(EG);
+    }
+
+    return true;
+}
 
 int EarthArmy::getCount() const {
     return soldierList.getCount() + tankList.getCount() + gunneryList.getCount();
