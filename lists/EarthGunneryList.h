@@ -11,4 +11,6 @@ class EarthGunneryList {
     bool add(EarthGunnery* unit);
     bool remove(EarthGunnery*& unit);
     void print();
+    int getCount() const;
+    bool isEmpty() const;
 };

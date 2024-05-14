@@ -15,11 +15,13 @@ bool AlienDroneList::add(AlienDrone* unit1, AlienDrone* unit2) {
 }
 
 bool AlienDroneList::remove(AlienDrone*& unit1, AlienDrone*& unit2) {
-    if (deque.getCount() < 2) return false;
+    if (deque.getCount() < 1) return false;
     deque.dequeue(unit1);
+    if (deque.getCount() < 1) return true;
     deque.dequeueBack(unit2);
     return true;
 }
+bool AlienDroneList::isEmpty() const  { return deque.getCount() == 0; }
 
 void AlienDroneList::print() {
     int count = deque.getCount();

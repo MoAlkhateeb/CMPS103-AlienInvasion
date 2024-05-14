@@ -27,4 +27,37 @@ EarthTankList* EarthArmy::getETList() { return &tankList;}
 EarthGunneryList* EarthArmy::getEGList() { return &gunneryList;  }
 
 
-bool EarthArmy::attack() { return false; }
+bool EarthArmy::attack() {
+    EarthSoldierList *ESList = getESList();
+    EarthTankList *ETList = getETList();
+    EarthGunneryList *EGList = getEGList();
+
+    if(ESList->isEmpty() || ETList->isEmpty()|| EGList->isEmpty()){
+        return false;
+    }
+    EarthSoldier *ES = nullptr;
+    EarthTank *ET = nullptr;
+    EarthGunnery *EG = nullptr;
+
+    if(ESList->remove(ES)){
+        if(ETList->remove(ET)){
+            if(EGList->remove(EG)){
+                ES->attack();
+                ET->attack();
+                EG->attack();
+
+                ESList->add(ES);
+                ETList->add(ET);
+                EGList->add(EG);
+
+                return true;
+            }else {
+                ESList->add(ES);
+                ETList->add(ET);
+            }
+        }else {
+            ESList->add(ES);
+        }
+    }
+    return false;
+}
