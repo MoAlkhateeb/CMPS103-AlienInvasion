@@ -61,10 +61,16 @@ class LinkedQueue : public QueueADT<T> {
         Node<T>* temp = frontPtr;
         cout << "[";
         while (temp != nullptr) {
-            if constexpr (std::is_pointer_v<T>)
-                cout << *temp->getItem();
+            if constexpr (std::is_pointer_v<T>) {
+                T item = temp->getItem();
+                    if (item) {
+                        cout << *item;
+                    }
+            }
             else
+            {
                 cout << temp->getItem();
+            }
             if (temp->getNext() != nullptr) cout << ", ";
             temp = temp->getNext();
         }

@@ -20,9 +20,9 @@ void AlienSoldier::attack(int timeStep, Mode operation) {
     if (operation == INTERACTIVE && game->getEarthArmy()->getESList()->getCount())
         cout << "AS " << getID() << " shots [ ";
 
+    EarthSoldier* enemy;
     for (int i = AttackCapacity; i > 0; i--)
     {
-        EarthSoldier* enemy;
         bool isEnemy = game->getEarthArmy()->getESList()->remove(enemy);
         int initialHealth;
 

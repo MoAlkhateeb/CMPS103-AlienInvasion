@@ -47,7 +47,7 @@ bool Unit::setFirstAttackTime(int time) {
 }
 
 int Unit::getDamage(Unit* other) const {
-    int damage = ((power * health) / 100.0) / sqrt(other->getHealth());
+    int damage = ((power * (double)health) / 100.0) / (double) sqrt(other->getHealth());
     return damage;
 }
 
